@@ -1,10 +1,36 @@
+# MongoDb and Mongoose backend starter pack -
+
+> I build this backend for copy this backend and use multiple times. I install all the initial technologies, packages and setup error handling. It will help us to show structured errors and data. If you like this file then please give me a star on this repository.
+
+## How to download And install :
+
+### Steps :
+
+1. Clone github repository -
+
+```
+git clone https://github.com/MajharolTanvir/Mongodb_Backend_Starter_Pack.git
+```
+
+2. Remove the git file from root
+3. Install Node_modules :
+
+```
+yarn add
+```
+
+4. Edit basic data on package.json file.
+5. Edit the .env_file to .env
+6. Add Mongodb database ur.
+7. Now use it and build standard backend project.
+
 ## Technologies - middleware - Packages :
 
 - Express, Mongodb, Mongoose, Cors, dotenv, ts-node-dev, eslint, prettier, husky, lint stage.
 
 ## How I setup this project:
 
-### Steps:
+### Steps :
 
 1. Initialize the file
 
@@ -221,11 +247,12 @@ yarn add --dev lint-staged
 
 ```
 "lint-staged": {
-  "src/**/*.ts": "yarn lint-prettier"
+  "src/**/*.ts": "yarn prettier"
 },
 ```
 
 27. Add this code in .husky-> pre-commit file -
+
 ```
 yarn lint-staged
 ```
@@ -237,11 +264,10 @@ yarn lint-staged
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "start": "node dist/server.js",
     "build": "tsc",
-    "lint:check": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "lint:fix": "eslint . --fic",
     "prettier:check": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "prettier:fix": "prettier --write .",
-    "lint-prettier": "yarn lint:check && yarn prettier:check",
+    "prettier": "yarn prettier:check",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky"
   },
