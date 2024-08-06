@@ -12,8 +12,8 @@
 git clone https://github.com/MajharolTanvir/Mongodb_Backend_Starter_Pack.git
 ```
 
-2. Remove the git file from root
-3. Install Node_modules :
+2. Remove the .git file from root
+3. Install Node_modules using :
 
 ```
 yarn add
