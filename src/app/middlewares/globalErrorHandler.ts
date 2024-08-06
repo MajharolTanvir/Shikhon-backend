@@ -3,6 +3,9 @@ import config from '../../config'
 import { IGenericErrorMessage } from '../../interfaces/error'
 import { handleValidationError } from '../../errors/handleValidationError'
 import ApiError from '../../errors/ApiError'
+import { ZodError } from 'zod'
+import handleZodError from '../../errors/handleZodError'
+import handleCastError from '../../errors/handleCastError'
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   let statusCode = 500
@@ -14,6 +17,16 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     ;(statusCode = simplifiedError.statusCode),
       (message = simplifiedError.message)
     errorMessage = simplifiedError.errorMessage
+  } else if (error instanceof ZodError) {
+    const simplifiedError = handleZodError(error)
+    statusCode = simplifiedError?.statusCode
+    message = simplifiedError?.message
+    errorMessage = simplifiedError?.errorMessage
+  } else if (error.name === 'CastError') {
+    const simplifiedError = handleCastError(error)
+    statusCode = simplifiedError?.statusCode
+    message = simplifiedError?.message
+    errorMessage = simplifiedError?.errorMessage
   } else if (error instanceof ApiError) {
     statusCode = error?.statusCode
     message = error?.message
