@@ -272,3 +272,8 @@ yarn lint-staged
     "prepare": "husky"
   },
 ```
+29. Finally setup Global error handling with Validation error, Cast error, Zod error and validation request.
+
+30. Authentication setup with "jsonwebtoken".
+
+### Hope you easily use this repository. Thank you so much.
