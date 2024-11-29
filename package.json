@@ -1,5 +1,5 @@
 {
-  "name": "Backend_with-mongoDB",
+  "name": "Shikhon",
   "version": "1.0.0",
   "main": "src/server.ts",
   "author": "Majharul_Tanvir",
@@ -50,5 +50,6 @@
     "Structured website setup",
     "Configure website setup",
     "Website development"
-  ]
+  ],
+  "repository": "https://github.com/MajharolTanvir/Mongodb_Backend_Starter_Pack.git"
 }
