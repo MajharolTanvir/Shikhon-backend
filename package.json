@@ -19,6 +19,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
@@ -30,6 +31,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
@@ -44,12 +46,5 @@
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.5.2"
   },
-  "keywords": [
-    "website setup",
-    "Mongodb website",
-    "Structured website setup",
-    "Configure website setup",
-    "Website development"
-  ],
-  "repository": "https://github.com/MajharolTanvir/Mongodb_Backend_Starter_Pack.git"
+  "repository": "https://github.com/MajharolTanvir/Shikhon-backend.git"
 }
