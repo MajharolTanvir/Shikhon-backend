@@ -19,5 +19,4 @@ const signupZodSchema = z.object({
 
 export const UserValidations = {
   signupZodSchema,
-  // userProfileZodSchema,
 }

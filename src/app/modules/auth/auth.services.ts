@@ -1,5 +1,4 @@
 import config from '../../../config'
-import nodemailer from 'nodemailer'
 import { UserType } from './auth.interface'
 import { User } from './auth.model'
 import { JwtHelper } from '../../../helpers/jwtHelper'
@@ -7,6 +6,8 @@ import { Secret } from 'jsonwebtoken'
 import sendSignUpCode from '../../../email/signup_email'
 import ApiError from '../../../errors/ApiError'
 import httpStatus from 'http-status'
+import sendResetPasswordWithMail from '../../../email/reset_password_email'
+import randomstring from 'randomstring'
 
 const signup = async (userData: UserType) => {
   const min = 100000
@@ -87,10 +88,44 @@ const signIn = async (userData: Partial<UserType>) => {
   }
 }
 
+const forgetPassword = async (email: string) => {
+  const user = await User.findOne({ email: email })
+
+  if (user) {
+    const resetToken = randomstring.generate()
+    await User.updateOne(
+      { _id: user!._id },
+      { $set: { token: resetToken } },
+      { new: true },
+    )
+    const name = user?.firstName + ' ' + user?.lastName
+    sendResetPasswordWithMail(name, user!.email, resetToken)
+    return { message: 'Email sent successfully' }
+  } else {
+    throw new ApiError(httpStatus.NOT_FOUND, "The user doesn't exist")
+  }
+}
+
+const resetPassword = async (token: string | undefined, password: string) => {
+  const isUserExist = await User.findOne({ token: token })
+
+  if (isUserExist) {
+    isUserExist.password = password
+    isUserExist.save()
+    await User.findByIdAndUpdate(
+      { _id: isUserExist._id },
+      { token: '' },
+      { new: true },
+    )
+  } else {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'This token has been expired')
+  }
+}
+
 export const UserServices = {
   signup,
   signIn,
-  // forgetPassword,
-  // resetPassword,
+  forgetPassword,
+  resetPassword,
   confirmedSignup,
 }

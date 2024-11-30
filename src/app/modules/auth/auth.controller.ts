@@ -41,10 +41,35 @@ const signIn = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const forgetPassword = catchAsync(async (req: Request, res: Response) => {
+  const { email } = req.body
+  const result = await UserServices.forgetPassword(email)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Password reset link sent successfully. Please check your email',
+    data: result,
+  })
+})
+
+const resetPassword = catchAsync(async (req: Request, res: Response) => {
+  const token = req.query.token as string
+  const { password } = req.body
+  const result = await UserServices.resetPassword(token, password)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Password reset successfully',
+    data: result,
+  })
+})
+
 export const UserControllers = {
   signup,
   signIn,
-  // forgetPassword,
-  // resetPassword,
+  forgetPassword,
+  resetPassword,
   confirmedSignup,
 }

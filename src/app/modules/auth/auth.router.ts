@@ -20,5 +20,7 @@ router.post(
 )
 
 router.post('/sign-in', UserControllers.signIn)
+router.post('/forget-password', UserControllers.forgetPassword)
+router.post('/reset-password', UserControllers.resetPassword)
 
 export const UserRoutes = router
