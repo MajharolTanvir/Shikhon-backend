@@ -51,11 +51,46 @@ const confirmedSignup = async (data: any, userEmail: string) => {
   return await User.findOne({ email: userEmail })
 }
 
+const signIn = async (userData: Partial<UserType>) => {
+  const { email, password } = userData
+
+  const user = new User()
+  const isUserExist = await user.isUserExist(email as string)
+
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist')
+  }
+
+  if (
+    isUserExist.password &&
+    !(await user.isPasswordMatch(password as string, isUserExist.password))
+  ) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Password does not match')
+  }
+
+  const { _id: userId, email: userEmail, role } = isUserExist
+  const accessToken = JwtHelper.createToken(
+    { userId, userEmail, role },
+    config.jwt.secret as Secret,
+    config.jwt.expires_in as string,
+  )
+
+  const refreshToken = JwtHelper.createToken(
+    { userId, userEmail, role },
+    config.jwt.refresh_secret as Secret,
+    config.jwt.refresh_expire_in as string,
+  )
+
+  return {
+    accessToken,
+    refreshToken,
+  }
+}
+
 export const UserServices = {
   signup,
-  // login,
+  signIn,
   // forgetPassword,
   // resetPassword,
-  // updateUserProfile,
   confirmedSignup,
 }

@@ -29,11 +29,22 @@ const confirmedSignup = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const signIn = catchAsync(async (req: Request, res: Response) => {
+  const userData = req.body
+  const result = await UserServices.signIn(userData)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User login successfully',
+    data: result,
+  })
+})
+
 export const UserControllers = {
   signup,
-  // login,
+  signIn,
   // forgetPassword,
   // resetPassword,
-  // updateUserProfile,
   confirmedSignup,
 }

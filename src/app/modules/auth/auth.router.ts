@@ -19,4 +19,6 @@ router.post(
   UserControllers.confirmedSignup,
 )
 
+router.post('/sign-in', UserControllers.signIn)
+
 export const UserRoutes = router
