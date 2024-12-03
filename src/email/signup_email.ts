@@ -3,10 +3,7 @@ import nodemailer from 'nodemailer'
 
 const sendSignUpCode = (name: string, email: string, code: number | null) => {
   const transporter = nodemailer.createTransport({
-    host: config.emailHost,
-    port: 587,
-    secure: false,
-    requireTLS: true,
+    service: 'gmail',
     auth: {
       user: config.emailUser,
       pass: config.emailPassword,

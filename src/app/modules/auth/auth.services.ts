@@ -8,6 +8,7 @@ import ApiError from '../../../errors/ApiError'
 import httpStatus from 'http-status'
 import sendResetPasswordWithMail from '../../../email/reset_password_email'
 import randomstring from 'randomstring'
+import { UserProfileServices } from '../users/users.services'
 
 const signup = async (userData: UserType) => {
   const min = 100000
@@ -45,6 +46,8 @@ const confirmedSignup = async (data: any, userEmail: string) => {
       },
       { new: true },
     )
+
+    await UserProfileServices.createProfile({}, isUserExist.id)
   } else {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Confirmation code is invalid!')
   }
